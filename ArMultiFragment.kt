@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.example.aroom.R
 import com.example.fragments.shopping.ProductDetailsFragmentArgs
 import com.google.ar.core.HitResult
 import com.google.ar.core.Plane
