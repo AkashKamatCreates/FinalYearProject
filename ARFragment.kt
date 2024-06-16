@@ -43,7 +43,6 @@ class ARFragment : Fragment(R.layout.fragment_vr) {
         val product = args.product
         arFragment = (childFragmentManager.findFragmentById(R.id.arFragment) as ArFragment).apply {
             setOnSessionConfigurationListener { session, config ->
-                // Modify the AR session configuration here
             }
             setOnViewCreatedListener { arSceneView ->
                 arSceneView.setFrameRateFactor(SceneView.FrameRate.FULL)
