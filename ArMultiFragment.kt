@@ -99,14 +99,10 @@ class ArMultiFragment : Fragment(R.layout.fragment_vr) {
 
 
 
-    private val MODEL_SIZE = Vector3(0.7f, 0.7f, 0.7f)
-    private val PADDING = 500.2f// Adjust as needed
 
     private fun addToScene(hitResult: HitResult, model: Renderable) {
         val anchorNode = AnchorNode(hitResult.createAnchor())
         scene.addChild(anchorNode)
-
-        
 
         anchorNode.addChild(TransformableNode(arFragment.transformationSystem).apply {
             renderable = model
