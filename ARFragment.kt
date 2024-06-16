@@ -72,16 +72,16 @@ class ARFragment : Fragment(R.layout.fragment_vr) {
             return
         }
 
-        // Create the Anchor.
+        // Anchor
         scene.addChild(AnchorNode(hitResult.createAnchor()).apply {
-            // Create the transformable model and add it to the anchor.
+            ///model to anchor
             addChild(TransformableNode(arFragment.transformationSystem).apply {
                 renderable = model
                 renderableInstance.setCulling(false)
                 renderableInstance.animate(true).start()
-                // Add the View
+                // view
                 addChild(Node().apply {
-                    // Define the relative position
+                    // relative position
                     localPosition = Vector3(0.0f, 1f, 0.0f)
                     localScale = Vector3(0.7f, 0.7f, 0.7f)
                     renderable = modelView
