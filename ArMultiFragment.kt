@@ -54,7 +54,6 @@ class ArMultiFragment : Fragment(R.layout.fragment_vr) {
             modelsToLoad = modelFilenames
         } else {
             Log.e(TAG, "No model filenames found in arguments")
-            // Handle the case where no model filenames are provided
         }
 
         arFragment = (childFragmentManager.findFragmentById(R.id.arFragment) as ArFragment).apply {
@@ -99,21 +98,8 @@ class ArMultiFragment : Fragment(R.layout.fragment_vr) {
             .await()
     }
 
-//    private fun addToScene(hitResult: HitResult, model: Renderable) {
-//        // Create the Anchor.
-//        scene.addChild(AnchorNode(hitResult.createAnchor()).apply {
-//            // Create the transformable model and add it to the anchor.
-//            addChild(TransformableNode(arFragment.transformationSystem).apply {
-//                renderable = model
-//                localPosition = Vector3(0.0f, 0.0f, 0.0f)
-//                localScale = Vector3(0.7f, 0.7f, 0.7f)
-//                renderableInstance.setCulling(false)
-//                renderableInstance.animate(true).start()
-//            })
-//        })
-//    }
 
-    // Assuming each model has a constant size
+
     private val MODEL_SIZE = Vector3(0.7f, 0.7f, 0.7f)
     private val PADDING = 500.2f// Adjust as needed
 
@@ -121,61 +107,16 @@ class ArMultiFragment : Fragment(R.layout.fragment_vr) {
         val anchorNode = AnchorNode(hitResult.createAnchor())
         scene.addChild(anchorNode)
 
-        val collisionDetected = checkForCollision(anchorNode, MODEL_SIZE)
-        if (collisionDetected) {
-            // Adjust position to avoid collision
-            val newPosition = calculateNonOverlappingPosition(anchorNode.worldPosition, MODEL_SIZE)
-            anchorNode.worldPosition = newPosition
-        }
+        
 
         anchorNode.addChild(TransformableNode(arFragment.transformationSystem).apply {
             renderable = model
         })
     }
 
-    private fun checkForCollision(anchorNode: AnchorNode, modelSize: Vector3): Boolean {
-        val newBounds = getBoundingBox(anchorNode, modelSize)
+    
 
-        for (existingNode in scene.children) {
-            if (existingNode is AnchorNode && existingNode != anchorNode) {
-                val existingBounds = getBoundingBox(existingNode, MODEL_SIZE)
-                if (doBoundingBoxesIntersect(newBounds, existingBounds)) {
-                    return true // Collision detected
-                }
-            }
-        }
-
-        return false // No collision detected
-    }
-
-    data class BoundingBox(val min: Vector3, val max: Vector3)
-
-    private fun getBoundingBox(node: AnchorNode, size: Vector3): BoundingBox {
-        val worldPosition = node.worldPosition
-        val min = Vector3(worldPosition.x - size.x / 2, worldPosition.y - size.y / 2, worldPosition.z - size.z / 2)
-        val max = Vector3(worldPosition.x + size.x / 2, worldPosition.y + size.y / 2, worldPosition.z + size.z / 2)
-        return BoundingBox(min, max)
-    }
-
-    private fun doBoundingBoxesIntersect(box1: BoundingBox, box2: BoundingBox): Boolean {
-        return !(box2.min.x > box1.max.x || box2.max.x < box1.min.x ||
-                box2.min.y > box1.max.y || box2.max.y < box1.min.y ||
-                box2.min.z > box1.max.z || box2.max.z < box1.min.z)
-    }
-
-
-
-    private fun calculateNonOverlappingPosition(position: Vector3, modelSize: Vector3): Vector3 {
-        // Adjust position by adding padding
-        return Vector3(
-            position.x + modelSize.x + PADDING,
-            position.y,
-            position.z
-        )
-    }
-
-
-    companion object {
-        private const val TAG = "VrMultiFragment"
+    object {
+        private const val TAG = "ArMultiFragment"
     }
 }
