@@ -57,7 +57,7 @@ class ArMultiFragment : Fragment(R.layout.fragment_vr) {
 
         arFragment = (childFragmentManager.findFragmentById(R.id.arFragment) as ArFragment).apply {
             setOnSessionConfigurationListener { session, config ->
-                // Modify the AR session configuration here
+                
             }
             setOnViewCreatedListener { arSceneView ->
                 arSceneView.setFrameRateFactor(SceneView.FrameRate.FULL)
